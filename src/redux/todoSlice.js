@@ -4,10 +4,7 @@ const todoSlice = createSlice({
   name: "todos",
   initialState: [
     { id: 1, title: "todo 1", completed: false },
-    { id: 2, title: "todo 2", completed: false },
-    { id: 3, title: "todo 3", completed: true },
-    { id: 4, title: "todo 4", completed: false },
-    { id: 5, title: "todo 5", completed: false },
+    { id: 2, title: "todo 2", completed: true },
   ],
   // eyleme yanıt verecek alan
   reducers: {
@@ -21,9 +18,16 @@ const todoSlice = createSlice({
       state.push(newTodo);
       // yeni oluşturulan state dizinin en sonuna eklenerek artmaya devam edecek
     },
+    toggleComplate: (state, action) => {
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      state[index].completed = action.payload.completed;
+    },
+    deleteTodo: (state, action) => {
+      return state.filter((todo) => todo.id !== action.payload.id);
+    },
   },
 });
 
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, toggleComplate, deleteTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;
